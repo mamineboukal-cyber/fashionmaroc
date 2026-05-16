@@ -16,9 +16,27 @@
         .main-content { margin-left: 250px; padding: 30px; }
         .card { border: none; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .table th { color: #6b7280; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
+        .mobile-nav { display: none; background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%); padding: 10px 15px; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+        .mobile-nav .brand { color: white; font-weight: bold; font-size: 1.1rem; }
+        .mobile-nav .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; margin-left: 15px; font-size: 1.1rem; }
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; padding: 15px; }
+            .mobile-nav { display: flex !important; }
+        }
     </style>
 </head>
 <body>
+
+<div class="mobile-nav">
+    <div class="brand">👗 Fashion Maroc</div>
+    <div class="nav-links">
+        <a href="/"><i class="fas fa-chart-pie"></i></a>
+        <a href="/produits"><i class="fas fa-tshirt"></i></a>
+        <a href="/commandes"><i class="fas fa-truck"></i></a>
+        <a href="/fournisseurs"><i class="fas fa-building"></i></a>
+    </div>
+</div>
 
 <div class="sidebar">
     <div class="brand">👗 Fashion Maroc</div>
@@ -33,50 +51,50 @@
         <h3 class="fw-bold mb-0">Commandes Fournisseurs</h3>
         <small class="text-muted">Suivi des approvisionnements</small>
     </div>
-
     <div class="card">
         <div class="card-body">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Fournisseur</th>
-                        <th>Date commande</th>
-                        <th>Date livraison prév.</th>
-                        <th>Montant</th>
-                        <th>Statut</th>
-                        <th>Détails</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for c in commandes %}
-                    <tr>
-                        <td><code>{{ c.id_commande }}</code></td>
-                        <td class="fw-semibold">{{ c.fournisseur.nom }}</td>
-                        <td>{{ c.date_commande }}</td>
-                        <td>{{ c.date_livraison_prev }}</td>
-                        <td><strong>{{ c.montant_total }} MAD</strong></td>
-                        <td>
-                            {% if c.statut == 'LIVREE' %}
-                                <span class="badge bg-success">LIVRÉE</span>
-                            {% elif c.statut == 'EN_COURS' %}
-                                <span class="badge bg-warning text-dark">EN COURS</span>
-                            {% else %}
-                                <span class="badge bg-secondary">EN ATTENTE</span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="/commandes/{{ c.id_commande }}" class="btn btn-sm btn-outline-primary">
-                                <i class="fas fa-eye"></i> Voir
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Fournisseur</th>
+                            <th>Date</th>
+                            <th>Livraison prév.</th>
+                            <th>Montant</th>
+                            <th>Statut</th>
+                            <th>Détails</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in commandes %}
+                        <tr>
+                            <td><code>{{ c.id_commande }}</code></td>
+                            <td class="fw-semibold">{{ c.fournisseur.nom }}</td>
+                            <td>{{ c.date_commande }}</td>
+                            <td>{{ c.date_livraison_prev }}</td>
+                            <td><strong>{{ c.montant_total }} MAD</strong></td>
+                            <td>
+                                {% if c.statut == 'LIVREE' %}
+                                    <span class="badge bg-success">LIVRÉE</span>
+                                {% elif c.statut == 'EN_COURS' %}
+                                    <span class="badge bg-warning text-dark">EN COURS</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">EN ATTENTE</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="/commandes/{{ c.id_commande }}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
-
 </body>
 </html>

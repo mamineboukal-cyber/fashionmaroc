@@ -18,9 +18,27 @@
         .fournisseur-card { border: none; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: transform 0.2s; }
         .fournisseur-card:hover { transform: translateY(-3px); }
         .avatar { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: bold; }
+        .mobile-nav { display: none; background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%); padding: 10px 15px; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+        .mobile-nav .brand { color: white; font-weight: bold; font-size: 1.1rem; }
+        .mobile-nav .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; margin-left: 15px; font-size: 1.1rem; }
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; padding: 15px; }
+            .mobile-nav { display: flex !important; }
+        }
     </style>
 </head>
 <body>
+
+<div class="mobile-nav">
+    <div class="brand">👗 Fashion Maroc</div>
+    <div class="nav-links">
+        <a href="/"><i class="fas fa-chart-pie"></i></a>
+        <a href="/produits"><i class="fas fa-tshirt"></i></a>
+        <a href="/commandes"><i class="fas fa-truck"></i></a>
+        <a href="/fournisseurs"><i class="fas fa-building"></i></a>
+    </div>
+</div>
 
 <div class="sidebar">
     <div class="brand">👗 Fashion Maroc</div>
@@ -35,10 +53,9 @@
         <h3 class="fw-bold mb-0">Fournisseurs</h3>
         <small class="text-muted">Liste des fournisseurs partenaires</small>
     </div>
-
     <div class="row g-3">
         {% for f in fournisseurs %}
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
             <div class="card fournisseur-card p-4">
                 <div class="d-flex align-items-center gap-3 mb-3">
                     <div class="avatar">{{ f.nom[0] }}</div>
@@ -51,9 +68,7 @@
                     <div><i class="fas fa-phone text-primary me-2"></i>{{ f.telephone }}</div>
                     <div><i class="fas fa-envelope text-primary me-2"></i>{{ f.email }}</div>
                     <div class="mt-2">
-                        <span class="badge bg-primary">
-                            {{ f.commandes|length }} commande(s)
-                        </span>
+                        <span class="badge bg-primary">{{ f.commandes|length }} commande(s)</span>
                     </div>
                 </div>
             </div>
@@ -61,6 +76,5 @@
         {% endfor %}
     </div>
 </div>
-
 </body>
 </html>

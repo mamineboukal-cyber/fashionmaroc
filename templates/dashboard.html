@@ -8,59 +8,41 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body { background: #f0f2f5; }
-        .sidebar {
-            min-height: 100vh;
-            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
-            width: 250px;
-            position: fixed;
-            top: 0; left: 0;
-            padding-top: 20px;
-            z-index: 100;
-        }
-        .sidebar .brand {
-            color: white;
-            font-size: 1.3rem;
-            font-weight: bold;
-            padding: 15px 20px 30px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .sidebar a {
-            display: block;
-            color: rgba(255,255,255,0.7);
-            padding: 12px 20px;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-        .sidebar a:hover, .sidebar a.active {
-            background: rgba(255,255,255,0.1);
-            color: white;
-            border-left: 3px solid #e94560;
-        }
+        .sidebar { min-height: 100vh; background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%); width: 250px; position: fixed; top: 0; left: 0; padding-top: 20px; z-index: 100; }
+        .sidebar .brand { color: white; font-size: 1.3rem; font-weight: bold; padding: 15px 20px 30px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .sidebar a { display: block; color: rgba(255,255,255,0.7); padding: 12px 20px; text-decoration: none; transition: all 0.2s; }
+        .sidebar a:hover, .sidebar a.active { background: rgba(255,255,255,0.1); color: white; border-left: 3px solid #e94560; }
         .sidebar a i { width: 25px; }
-        .main-content {
-            margin-left: 250px;
-            padding: 30px;
-        }
-        .stat-card {
-            border-radius: 15px;
-            border: none;
-            padding: 25px;
-            color: white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        .stat-card .icon {
-            font-size: 2.5rem;
-            opacity: 0.8;
-        }
+        .main-content { margin-left: 250px; padding: 30px; }
+        .stat-card { border-radius: 15px; border: none; padding: 25px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .stat-card .icon { font-size: 2.5rem; opacity: 0.8; }
         .stat-card h2 { font-size: 2.5rem; font-weight: bold; margin: 10px 0 0; }
         .card { border: none; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .badge-alerte { background: #fee2e2; color: #dc2626; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; }
         .table th { color: #6b7280; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
+        .mobile-nav { display: none; background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%); padding: 10px 15px; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+        .mobile-nav .brand { color: white; font-weight: bold; font-size: 1.1rem; }
+        .mobile-nav .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; margin-left: 15px; font-size: 1.1rem; }
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; padding: 15px; }
+            .mobile-nav { display: flex !important; }
+            .stat-card h2 { font-size: 1.8rem; }
+        }
     </style>
 </head>
 <body>
 
-<!-- Sidebar -->
+<div class="mobile-nav">
+    <div class="brand">👗 Fashion Maroc</div>
+    <div class="nav-links">
+        <a href="/"><i class="fas fa-chart-pie"></i></a>
+        <a href="/produits"><i class="fas fa-tshirt"></i></a>
+        <a href="/commandes"><i class="fas fa-truck"></i></a>
+        <a href="/fournisseurs"><i class="fas fa-building"></i></a>
+    </div>
+</div>
+
 <div class="sidebar">
     <div class="brand">👗 Fashion Maroc</div>
     <a href="/" class="active"><i class="fas fa-chart-pie"></i> Dashboard</a>
@@ -69,7 +51,6 @@
     <a href="/fournisseurs"><i class="fas fa-building"></i> Fournisseurs</a>
 </div>
 
-<!-- Main Content -->
 <div class="main-content">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
@@ -78,30 +59,29 @@
         </div>
     </div>
 
-    <!-- Stat Cards -->
     <div class="row g-3 mb-4">
-        <div class="col-md-3">
+        <div class="col-6 col-md-3">
             <div class="stat-card" style="background: linear-gradient(135deg, #667eea, #764ba2);">
                 <div class="icon"><i class="fas fa-tshirt"></i></div>
                 <div class="text-white-50">Total Produits</div>
                 <h2>{{ total_produits }}</h2>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-6 col-md-3">
             <div class="stat-card" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
                 <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
                 <div class="text-white-50">Alertes Rupture</div>
                 <h2>{{ alertes|length }}</h2>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-6 col-md-3">
             <div class="stat-card" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
                 <div class="icon"><i class="fas fa-truck"></i></div>
                 <div class="text-white-50">Commandes En Cours</div>
                 <h2>{{ commandes_en_cours }}</h2>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-6 col-md-3">
             <div class="stat-card" style="background: linear-gradient(135deg, #43e97b, #38f9d7);">
                 <div class="icon"><i class="fas fa-building"></i></div>
                 <div class="text-white-50">Fournisseurs</div>
@@ -110,74 +90,73 @@
         </div>
     </div>
 
-    <!-- Alerts Table -->
     <div class="card mb-4">
         <div class="card-body">
             <h5 class="fw-bold mb-3"><i class="fas fa-exclamation-triangle text-danger me-2"></i>Produits en rupture de stock</h5>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Produit</th>
-                        <th>Référence</th>
-                        <th>Disponible</th>
-                        <th>Seuil minimum</th>
-                        <th>Emplacement</th>
-                        <th>Statut</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for s in alertes %}
-                    <tr>
-                        <td class="fw-semibold">{{ s.produit.libelle }}</td>
-                        <td><code>{{ s.produit.reference }}</code></td>
-                        <td><span class="text-danger fw-bold">{{ s.quantite_disponible }}</span></td>
-                        <td>{{ s.seuil_minimum }}</td>
-                        <td>{{ s.emplacement_rayon }}</td>
-                        <td><span class="badge-alerte">⚠️ RUPTURE</span></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Produit</th>
+                            <th>Référence</th>
+                            <th>Disponible</th>
+                            <th>Seuil</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in alertes %}
+                        <tr>
+                            <td class="fw-semibold">{{ s.produit.libelle }}</td>
+                            <td><code>{{ s.produit.reference }}</code></td>
+                            <td><span class="text-danger fw-bold">{{ s.quantite_disponible }}</span></td>
+                            <td>{{ s.seuil_minimum }}</td>
+                            <td><span class="badge-alerte">⚠️ RUPTURE</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-    <!-- Recent Orders -->
     <div class="card">
         <div class="card-body">
             <h5 class="fw-bold mb-3"><i class="fas fa-truck text-primary me-2"></i>Commandes récentes</h5>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Fournisseur</th>
-                        <th>Date</th>
-                        <th>Montant</th>
-                        <th>Statut</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for c in commandes_recentes %}
-                    <tr>
-                        <td><code>{{ c.id_commande }}</code></td>
-                        <td>{{ c.fournisseur.nom }}</td>
-                        <td>{{ c.date_commande }}</td>
-                        <td><strong>{{ c.montant_total }} MAD</strong></td>
-                        <td>
-                            {% if c.statut == 'LIVREE' %}
-                                <span class="badge bg-success">LIVRÉE</span>
-                            {% elif c.statut == 'EN_COURS' %}
-                                <span class="badge bg-warning text-dark">EN COURS</span>
-                            {% else %}
-                                <span class="badge bg-secondary">EN ATTENTE</span>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Fournisseur</th>
+                            <th>Date</th>
+                            <th>Montant</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in commandes_recentes %}
+                        <tr>
+                            <td><code>{{ c.id_commande }}</code></td>
+                            <td>{{ c.fournisseur.nom }}</td>
+                            <td>{{ c.date_commande }}</td>
+                            <td><strong>{{ c.montant_total }} MAD</strong></td>
+                            <td>
+                                {% if c.statut == 'LIVREE' %}
+                                    <span class="badge bg-success">LIVRÉE</span>
+                                {% elif c.statut == 'EN_COURS' %}
+                                    <span class="badge bg-warning text-dark">EN COURS</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">EN ATTENTE</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
-
 </body>
 </html>
